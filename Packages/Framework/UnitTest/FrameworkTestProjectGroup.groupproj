@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D44B764A-3BF0-4724-89ED-F303077A3EEA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\Framework.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FrameworkTest.dproj">
+            <Dependencies>..\Framework.dproj</Dependencies>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Framework">
+        <MSBuild Projects="..\Framework.dproj"/>
+    </Target>
+    <Target Name="Framework:Clean">
+        <MSBuild Projects="..\Framework.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Framework:Make">
+        <MSBuild Projects="..\Framework.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FrameworkTest" DependsOnTargets="Framework">
+        <MSBuild Projects="FrameworkTest.dproj"/>
+    </Target>
+    <Target Name="FrameworkTest:Clean" DependsOnTargets="Framework:Clean">
+        <MSBuild Projects="FrameworkTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FrameworkTest:Make" DependsOnTargets="Framework:Make">
+        <MSBuild Projects="FrameworkTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Framework;FrameworkTest"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Framework:Clean;FrameworkTest:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Framework:Make;FrameworkTest:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
