@@ -1,18 +1,18 @@
-unit uCriptografador;
+unit uCryptographer;
 
 interface
 
 uses
-  uCriptografia;
+  uCryptography;
 
 type
-  ICriptografador = interface(IInterface)
+  ICryptographer = interface(IInterface)
   ['{8445B9AC-306F-4BB1-9224-C5287261410D}']
     function Encrypt: String;
     function Decrypt: String;
   end;
 
-  TCriptografador = class(TInterfacedObject, ICriptografador)
+  TCryptographer = class(TInterfacedObject, ICryptographer)
   strict private
     FToken: String;
     FPassword: String;
@@ -20,8 +20,8 @@ type
 
     function GetPassword: String;
   public
-    constructor Create(_ACriptografia: TCriptografia);
-    class function New(_ACriptografia: TCriptografia): ICriptografador;
+    constructor Create(_ACryptography: TCryptography);
+    class function New(_ACryptography: TCryptography): ICryptographer;
 
     function Encrypt: String;
     function Decrypt: String;
@@ -32,21 +32,21 @@ implementation
 uses
   System.SysUtils, uTPLb_CryptographicLibrary, uTPLb_Codec, uFrameworkConsts;
 
-{ TCriptografia }
+{ TCryptography }
 
-class function TCriptografador.New(_ACriptografia: TCriptografia): ICriptografador;
+class function TCryptographer.New(_ACryptography: TCryptography): ICryptographer;
 begin
-  Result := Self.Create(_ACriptografia);
+  Result := Self.Create(_ACryptography);
 end;
 
-constructor TCriptografador.Create(_ACriptografia: TCriptografia);
+constructor TCryptographer.Create(_ACryptography: TCryptography);
 begin
-  FToken := _ACriptografia.Token;
-  FPassword := _ACriptografia.Password;
-  FMessage := _ACriptografia.Message;
+  FToken := _ACryptography.Token;
+  FPassword := _ACryptography.Password;
+  FMessage := _ACryptography.Message;
 end;
 
-function TCriptografador.Decrypt: String;
+function TCryptographer.Decrypt: String;
 var
   CryptoLib: TCryptographicLibrary;
   Codec: TCodec;
@@ -59,11 +59,11 @@ begin
     try
       Codec.CryptoLibrary := CryptoLib;
       Codec.StreamCipherId := STREAMCIPHERID;
-      Codec.BlockCipherId := BLOCKCIPHERID; //Encriptação AES 256 bits
+      Codec.BlockCipherId := BLOCKCIPHERID; // Encrypt with AES 256 bits
       Codec.ChainModeId := CHAINMODEID;
 
       Codec.Reset;
-      Codec.Password := GetPassword; //Atribuindo a chave para Decriptografia
+      Codec.Password := GetPassword; // Attachment key to decrypt
       Codec.DecryptString(Result, Trim(FMessage), TEncoding.UTF8);
     finally
       FreeAndNil(Codec);
@@ -73,7 +73,7 @@ begin
   end;
 end;
 
-function TCriptografador.Encrypt: String;
+function TCryptographer.Encrypt: String;
 var
   CryptoLib: TCryptographicLibrary;
   Codec: TCodec;
@@ -84,11 +84,11 @@ begin
     try
       Codec.CryptoLibrary := CryptoLib;
       Codec.StreamCipherId := STREAMCIPHERID;
-      Codec.BlockCipherId := BLOCKCIPHERID; //Encriptação AES 256 bits
+      Codec.BlockCipherId := BLOCKCIPHERID; // Encrypt with AES 256 bits
       Codec.ChainModeId := CHAINMODEID;
 
       Codec.Reset;
-      Codec.Password := GetPassword; //Atribuindo a chave para a Criptografia
+      Codec.Password := GetPassword; // Attachment key to decrypt
       Codec.EncryptString(FMessage, Result, TEncoding.UTF8);
     finally
       FreeAndNil(Codec);
@@ -98,7 +98,7 @@ begin
   end;
 end;
 
-function TCriptografador.GetPassword: String;
+function TCryptographer.GetPassword: String;
 var
   AMiddlePOSToken: Integer;
 begin

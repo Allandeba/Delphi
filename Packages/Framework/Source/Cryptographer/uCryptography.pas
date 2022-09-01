@@ -1,9 +1,9 @@
-unit uCriptografia;
+unit uCryptography;
 
 interface
 
 type
-  TCriptografia = class
+  TCryptography = class
   private
     FToken: String;
     FPassword: String;
