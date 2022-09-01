@@ -3,7 +3,7 @@ unit uFrameworkEnums;
 interface
 
   type
-    TMessageIconType = (timSuccess, timWarning, timError, timDev);
+    TMessageIconType = (mitSuccess, mitWarning, mitError, mitDev);
   const
     TMessageIconTypeValues: array [TMessageIconType] of String = ('Sucesso', 'Aviso', 'Erro', 'Desenvolvimento');
 

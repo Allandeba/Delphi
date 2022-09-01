@@ -21,7 +21,7 @@ uses
 
 class function TFrameworkSysInfo.GetFilePathImageDesenvolvimento: String;
 begin
-  Result := ExtractFilePath(Application.ExeName) + IMG_FOLDER + IMG_DESENVOLVIMENTO;
+  Result := ExtractFilePath(Application.ExeName) + IMG_FOLDER + IMG_DEVELOPER;
 end;
 
 class function TFrameworkSysInfo.GetFilePathImageError: String;

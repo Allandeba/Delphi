@@ -8,6 +8,15 @@ uses
 type
   TButtonAction = (baOk, baYesNo);
 
+  TMessageViewResult = class
+  private
+    FTitle: String;
+    FDetail: String;
+  public
+    property Title: String read FTitle write FTitle;
+    property Detail: String read FDetail write FDetail;
+  end;
+
   IMessageView = interface
   ['{D1E0111A-749C-4F06-A0C4-8F0D6862D885}']
     function Args(_AArgs: TArray<String>): IMessageView;
@@ -18,6 +27,7 @@ type
     function Error: IMessageView;
     function Dev: IMessageView;
     function Detail(_ADetail: String): IMessageView;
+    function GetResult: TMessageViewResult;
 
     procedure Show;
     procedure ShowAndAbort;
@@ -40,6 +50,7 @@ type
     function Error: IMessageView;
     function Dev: IMessageView;
     function Detail(_ADetail: String): IMessageView;
+    function GetResult: TMessageViewResult;
 
     procedure Show;
     procedure ShowAndAbort;
@@ -50,7 +61,7 @@ type
 implementation
 
 uses
-  uFrameworkMessageView, SysUtils;
+  SysUtils, uFrameworkMessageView;
 
 { TMessageView }
 
@@ -59,8 +70,7 @@ var
   I: Integer;
 begin
   for I := Low(_AArgs) to High(_AArgs) do
-    FMessage := FMessage.Replace('%s', _AArgs[I]);
-
+    FMessage := StringReplace(FMessage, '%s', _AArgs[I], []);
   Result := Self;
 end;
 
@@ -75,7 +85,7 @@ begin
   inherited Create;
   FButtonAction := [baOk];
   FMessage := _AMessage;
-  FMessageIconType := timWarning;
+  FMessageIconType := mitWarning;
 end;
 
 function TMessageView.Detail(_ADetail: String): IMessageView;
@@ -86,14 +96,26 @@ end;
 
 function TMessageView.Dev: IMessageView;
 begin
-  FMessageIconType := timDev;
+  FMessageIconType := mitDev;
   Result := Self;
 end;
 
 function TMessageView.Error: IMessageView;
 begin
-  FMessageIconType := timError;
+  FMessageIconType := mitError;
   Result := Self;
+end;
+
+function TMessageView.GetResult: TMessageViewResult;
+var
+  AFrameworkMessageView: TFrameworkMessageView;
+begin
+  AFrameworkMessageView := TFrameworkMessageView.CreateMsg(FMessage, FButtonAction, FMessageIconType, FDetail);
+  try
+    Result := AFrameworkMessageView.GetResult;
+  finally
+    AFrameworkMessageView.Free;
+  end;
 end;
 
 class function TMessageView.New(_AMessage: String): IMessageView;
@@ -126,13 +148,13 @@ end;
 
 function TMessageView.Success: IMessageView;
 begin
-  FMessageIconType := timSuccess;
+  FMessageIconType := mitSuccess;
   Result := Self;
 end;
 
 function TMessageView.Warning: IMessageView;
 begin
-  FMessageIconType := timWarning;
+  FMessageIconType := mitWarning;
   Result := Self;
 end;
 

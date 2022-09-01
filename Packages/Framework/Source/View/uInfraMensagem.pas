@@ -3,7 +3,7 @@ unit uInfraMensagem;
 interface
 
 uses
-  System.UITypes, System.Generics.Collections, uEnums;
+  System.UITypes, System.Generics.Collections, uFrameworkEnums;
 
 type
   IInfraMensagemView = interface
@@ -25,7 +25,7 @@ type
   strict private
     FMensagem: String;
     FBotoes: TDictionary<String, TModalResult>;
-    FTipoIconeMensagem: TTipoIconeMensagem;
+    FTipoIconeMensagem: TMessageIconType;
     FDetail: String;
   public
     constructor Create(_AMensagem: String);
@@ -49,7 +49,7 @@ type
 implementation
 
 uses
-  uInfraMensagemView, SysUtils;
+  uFrameworkMessageView, SysUtils;
 
 { TMensagemView }
 
@@ -130,13 +130,13 @@ end;
 
 function TMensagemView.ShowResult: TModalResult;
 var
-  AInfraMensagemForm: TInfraMensagemView;
+  AFrameworkMessageView: TFrameworkMessageView;
 begin
-  AInfraMensagemForm := TInfraMensagemView.CreateMsg(FMensagem, FBotoes, FTipoIconeMensagem, FDetail);
+  AFrameworkMessageView := TFrameworkMessageView.CreateMsg(FMensagem, FBotoes, FTipoIconeMensagem, FDetail);
   try
-    Result := AInfraMensagemForm.ShowModal;
+    Result := AFrameworkMessageView.ShowModal;
   finally
-    AInfraMensagemForm.Free;
+    AFrameworkMessageView.Free;
   end;
 end;
 

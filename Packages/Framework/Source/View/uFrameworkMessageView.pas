@@ -18,6 +18,7 @@ type
     PanelImage: TPanel;
     PanelMessageDetail: TPanel;
     PanelMessageTitle: TPanel;
+    PanelContent: TPanel;
     procedure FormShow(Sender: TObject);
   private
     procedure ResizeView;
@@ -27,11 +28,14 @@ type
 
     function GetMessage(_AMessage: String): String;
     function GetTitle(_AMessage: String): String;
+    function GetMemoMessage(_ADetail: String): String;
   protected
     procedure PrepareComponents; override;
   public
     constructor CreateMsg(_AMessage: String); overload;
     constructor CreateMsg(_AMessage: String; _AButtonAction: TArray<TButtonAction>; _AMessageIconType: TMessageIconType; _ADetail: String); overload;
+
+    function GetResult: TMessageViewResult;
   end;
 
 implementation
@@ -58,16 +62,16 @@ begin
   ImageError.Transparent := True;
 
   case _AMessageIconType of
-    timSuccess:
+    mitSuccess:
      ImageError.Picture.LoadFromFile(TFrameworkSysInfo.GetFilePathImageSuccess);
 
-    timWarning:
+    mitWarning:
       ImageError.Picture.LoadFromFile(TFrameworkSysInfo.GetFilePathImageWarning);
 
-    timError:
+    mitError:
       ImageError.Picture.LoadFromFile(TFrameworkSysInfo.GetFilePathImageError);
 
-    timDev:
+    mitDev:
       ImageError.Picture.LoadFromFile(TFrameworkSysInfo.GetFilePathImageDesenvolvimento);
   end;
 end;
@@ -77,7 +81,7 @@ begin
   CreateMsg(_AMessage);
   CreateButtons(_AButtonAction);
   ConfigureImagem(_AMessageIconType);
-  MemoMessage.Text := MemoMessage.Text + sLineBreak + _ADetail;
+  MemoMessage.Text := GetMemoMessage(_ADetail);;
 end;
 
 procedure TFrameworkMessageView.CreateButton(_ACaption: TArray<String>; _AModalResult: TArray<TModalResult>);
@@ -135,7 +139,6 @@ var
   APos: Integer;
 begin
   Result := _AMessage;
-
   if not Length(_AMessage) > 0 then
     Exit;
 
@@ -144,24 +147,47 @@ begin
     Result := Copy(_AMessage, 1, APos - 1);
 end;
 
+function TFrameworkMessageView.GetMemoMessage(_ADetail: String): String;
+begin
+  Result := EmptyStr;
+
+  if Length(MemoMessage.Text) > 0 then
+    Result := Format('%s%s%s', [MemoMessage.Text, sLineBreak, _ADetail])
+  else
+    Result := _ADetail;
+end;
+
 function TFrameworkMessageView.GetMessage(_AMessage: String): String;
 var
   APos: Integer;
 begin
-  Result := _AMessage;
-  if not Length(Result) > 0 then
+  Result := EmptyStr;
+  if not Length(_AMessage) > 0 then
     Exit;
 
-  APos := Pos(MSG_CRLF, Result);
+  APos := Pos(MSG_CRLF, _AMessage);
   if APos > 0 then
-    Result := Copy(Result, APos + 2, Length(Result));
+    Result := Copy(_AMessage, APos + 2, Length(_AMessage));
   Result := Trim(Result);
+end;
+
+function TFrameworkMessageView.GetResult: TMessageViewResult;
+begin
+  Result := TMessageViewResult.Create;
+  try
+    Result.Title := LabelTitle.Caption;
+    Result.Detail := MemoMessage.Text;
+  except
+    Result.Free;
+    raise;
+  end;
 end;
 
 procedure TFrameworkMessageView.PrepareComponents;
 begin
   inherited;
   BorderStyle := bsDialog;
+//  AutoSize := True;
 
   PanelButtons.Padding.Top := 3;
   PanelButtons.Padding.Bottom := 3;
@@ -185,12 +211,16 @@ end;
 procedure TFrameworkMessageView.ResizeView;
 var
   AIsEmptyMessage: Boolean;
+  ATotalSizeNecessary: Integer;
 begin
   AIsEmptyMessage := MemoMessage.Text = '';
   PanelMessageDetail.Visible := not AIsEmptyMessage;
 
   if AIsEmptyMessage then
-    Height :=  Height - PanelMessageDetail.Height;
+  begin
+    ATotalSizeNecessary := PanelImage.Height + PanelButtons.Height + PanelMessageTitle.Height;    
+    Height :=  ATotalSizeNecessary - PanelMessageDetail.Height;
+  end;
 end;
 
 end.
