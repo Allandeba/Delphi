@@ -7,7 +7,6 @@ The contents of this file are subject to the Mozilla Public License (MPL)
 Version 1.1 (the "License"); you may not use this file except in compliance
 with the License. You may obtain a copy of the License at
 http://www.mozilla.org/MPL/
-
 Alternatively, you may redistribute it and/or modify it under the terms of
 the GNU Lesser General Public License (LGPL) as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -86,7 +85,7 @@ implementation
 
 
 
-uses SysUtils, Math, uTPLb_StreamUtils, uTPLb_CFB_Block, uTPLb_Constants,
+uses SysUtils, Math, uTPLb_StreamUtils, uTPLb_Constants,
      uTPLb_CFB_8Bit, uTPLb_PointerArithmetic, uTPLb_I18n;
 
 

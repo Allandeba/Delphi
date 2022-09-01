@@ -187,7 +187,7 @@ implementation
 
 
 
-uses uTPLb_StreamUtils, uTPLb_BinaryUtils, Math, uTPLB_StrUtils;
+uses uTPLb_StreamUtils, Math, uTPLB_StrUtils;
 
 
 

@@ -103,7 +103,7 @@ implementation
 
 
 uses SysUtils, Math, uTPLb_StreamUtils, uTPLb_Constants, uTPLb_StreamToBlock,
-     uTPLb_PointerArithmetic, uTPLb_I18n, uTPLb_CBC, uTPLb_Random
+     uTPLb_CBC, uTPLb_Random
 {$IF compilerversion <= 17}
 , uTPLb_D7Compatibility
 {$ENDIF}

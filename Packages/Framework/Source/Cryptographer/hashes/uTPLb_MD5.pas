@@ -60,8 +60,8 @@ implementation
 
 
 
-uses SysUtils, uTPLb_BinaryUtils, uTPLb_StreamUtils, uTPLb_PointerArithmetic,
-     uTPLb_IntegerUtils, uTPLb_Constants, uTPLb_I18n, uTPLb_StrUtils;
+uses SysUtils, uTPLb_StreamUtils, uTPLb_PointerArithmetic,
+     uTPLb_Constants, uTPLb_StrUtils;
 
 type
 TMD5_Hasher = class( TInterfacedObject, IHasher)

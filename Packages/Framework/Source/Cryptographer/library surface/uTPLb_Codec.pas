@@ -31,7 +31,7 @@ unit uTPLb_Codec;
 interface
 uses SysUtils, Classes, uTPLb_StreamCipher, uTPLb_BlockCipher, uTPLb_Asymetric,
      uTPLb_BaseNonVisualComponent, uTPLb_CryptographicLibrary, uTPLb_CodecIntf,
-     uTPLb_HashDsc, uTPLb_Hash, uTPLb_StreamUtils;
+     uTPLb_Hash, uTPLb_StreamUtils;
 
 
 type
@@ -300,8 +300,8 @@ TCodec = class( TTPLb_BaseNonVisualComponent, ICryptographicLibraryWatcher,
 
 implementation
 
-uses Math, uTPLB_SHA1, uTPLb_ECB, uTPLb_Random, uTPLb_Decorators,
-     uTPLb_BinaryUtils, uTPLb_I18n
+uses Math, uTPLB_SHA1, uTPLb_Random, uTPLb_Decorators,
+     uTPLb_I18n
 {$IF CompilerVersion >= 21}
      , Rtti
 {$ENDIF}

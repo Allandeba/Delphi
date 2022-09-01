@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.Menus, System.Generics.Collections, Vcl.ExtCtrls, uFrameworkEnums, Vcl.StdCtrls, Vcl.Imaging.pngimage, Vcl.Imaging.pnglang, uFrameworkView,
+  Vcl.Menus, Vcl.ExtCtrls, uFrameworkEnums, Vcl.StdCtrls, Vcl.Imaging.pngimage, uFrameworkView,
   uFrameworkMessage;
 
 type

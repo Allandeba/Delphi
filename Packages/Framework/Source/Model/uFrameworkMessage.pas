@@ -3,7 +3,7 @@ unit uFrameworkMessage;
 interface
 
 uses
-  System.UITypes, System.Generics.Collections, uFrameworkEnums;
+  System.UITypes, uFrameworkEnums;
 
 type
   TButtonAction = (baOk, baYesNo);

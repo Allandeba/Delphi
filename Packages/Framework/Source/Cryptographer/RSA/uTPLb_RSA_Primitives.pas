@@ -219,7 +219,7 @@ implementation
 
 
 
-uses uTPLb_PointerArithmetic, SysUtils, Math, uTPLb_SHA1,
+uses SysUtils, Math, uTPLb_SHA1,
      uTPLb_HashDsc, uTPLb_StreamUtils, SyncObjs, uTPLb_Random, uTPLb_I18n
 {$IFDEF SI}
   , SmartInspect,

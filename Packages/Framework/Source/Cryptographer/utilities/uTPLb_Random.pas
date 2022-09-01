@@ -65,7 +65,7 @@ TRandomStream = class( TStream)
 implementation
 
 uses
-  {$IFDEF MSWINDOWS}Windows, {$ENDIF}Math, SysUtils, uTPLb_IntegerUtils;
+  {$IFDEF MSWINDOWS}Windows, {$ENDIF}Math, SysUtils;
 var
   Inst: TRandomStream = nil;
 

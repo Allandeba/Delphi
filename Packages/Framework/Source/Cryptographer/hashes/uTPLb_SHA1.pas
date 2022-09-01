@@ -67,7 +67,7 @@ implementation
 
 
 uses SysUtils, uTPLb_BinaryUtils, uTPLb_StreamUtils, uTPLb_PointerArithmetic,
-     uTPLb_IntegerUtils, uTPLB_Constants, uTPLb_I18n, uTPLB_StrUtils;
+     uTPLB_Constants, uTPLB_StrUtils;
 
 type
 TSHA1_Hasher = class( TInterfacedObject, IHasher)
