@@ -1,4 +1,4 @@
 # Delphi
-My Framework dependencies.
+My projects dependencies.
 * Packages;
 * DLLs;
