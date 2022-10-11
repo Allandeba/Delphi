@@ -26,7 +26,6 @@ package Components;
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
-{$M+}
 
 requires
   rtl,
@@ -34,6 +33,7 @@ requires
   vclimg;
 
 contains
-  uADPasswordButtonEdit in 'Source\uADPasswordButtonEdit.pas';
+  uADPasswordButtonEdit in 'Source\uADPasswordButtonEdit.pas',
+  uADComboBox in 'Source\uADComboBox.pas';
 
 end.
