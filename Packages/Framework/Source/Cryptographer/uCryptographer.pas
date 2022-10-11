@@ -20,8 +20,8 @@ type
 
     function GetPassword: String;
   public
-    constructor Create(_ACryptography: TCryptography);
-    class function New(_ACryptography: TCryptography): ICryptographer;
+    constructor Create(_Cryptography: TCryptography);
+    class function New(_Cryptography: TCryptography): ICryptographer;
 
     function Encrypt: String;
     function Decrypt: String;
@@ -34,16 +34,16 @@ uses
 
 { TCryptography }
 
-class function TCryptographer.New(_ACryptography: TCryptography): ICryptographer;
+class function TCryptographer.New(_Cryptography: TCryptography): ICryptographer;
 begin
-  Result := Self.Create(_ACryptography);
+  Result := Self.Create(_Cryptography);
 end;
 
-constructor TCryptographer.Create(_ACryptography: TCryptography);
+constructor TCryptographer.Create(_Cryptography: TCryptography);
 begin
-  FToken := _ACryptography.Token;
-  FPassword := _ACryptography.Password;
-  FMessage := _ACryptography.Message;
+  FToken := _Cryptography.Token;
+  FPassword := _Cryptography.Password;
+  FMessage := _Cryptography.Message;
 end;
 
 function TCryptographer.Decrypt: String;

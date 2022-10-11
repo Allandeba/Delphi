@@ -11,12 +11,12 @@ type
 
   IRequest<T> = interface(IInterface)
     ['{50AED51B-146A-4D93-81E4-A2E04C8B93CF}']
-    function New(_AUrlRequest: String): IRequest<T>;
-    function AddParams(_AParametros: TStringList): IRequest<T>;
-    function Authorization(_AToken: String): IRequest<T>;
-    function ContentType(_AContentType: TContentType): IRequest<T>;
-    function RequestType(_ARequestType: TRequestOperation): IRequest<T>;
-    function DoRequest(_AStream: TStream = nil): String;
+    function New(_UrlRequest: String): IRequest<T>;
+    function AddParams(_Parametros: TStringList): IRequest<T>;
+    function Authorization(_Token: String): IRequest<T>;
+    function ContentType(_ContentType: TContentType): IRequest<T>;
+    function RequestType(_RequestType: TRequestOperation): IRequest<T>;
+    function DoRequest(_Stream: TStream = nil): String;
   end;
 
   TRequest<T> = class(TInterfacedObject, IRequest<T>)
@@ -33,19 +33,19 @@ type
     procedure ValidarRequest;
     procedure SetContentType;
 
-    function GetRequest(_AStream: TStream = nil): String;
+    function GetRequest(_Stream: TStream = nil): String;
     function PostRequest: String;
     function DeleteRequest: String;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function New(_AUrlRequest: String): IRequest<T>;
-    function AddParams(_AParametros: TStringList): IRequest<T>;
-    function Authorization(_AToken: String): IRequest<T>;
-    function ContentType(_AContentType: TContentType): IRequest<T>;
-    function RequestType(_ARequestType: TRequestOperation): IRequest<T>;
-    function DoRequest(_AStream: TStream = nil): String;
+    function New(_UrlRequest: String): IRequest<T>;
+    function AddParams(_Parametros: TStringList): IRequest<T>;
+    function Authorization(_Token: String): IRequest<T>;
+    function ContentType(_ContentType: TContentType): IRequest<T>;
+    function RequestType(_RequestType: TRequestOperation): IRequest<T>;
+    function DoRequest(_Stream: TStream = nil): String;
   end;
 
 implementation
@@ -55,15 +55,15 @@ uses
 
 { TRequest }
 
-function TRequest<T>.AddParams(_AParametros: TStringList): IRequest<T>;
+function TRequest<T>.AddParams(_Parametros: TStringList): IRequest<T>;
 begin
-  FParametros := _AParametros.Clone as TStringList;
+  FParametros := _Parametros.Clone as TStringList;
   Result := Self;
 end;
 
-function TRequest<T>.Authorization(_AToken: String): IRequest<T>;
+function TRequest<T>.Authorization(_Token: String): IRequest<T>;
 begin
-  FIdHTTP.Request.CustomHeaders.AddValue('Authorization', _AToken);
+  FIdHTTP.Request.CustomHeaders.AddValue('Authorization', _Token);
   Result := Self;
 end;
 
@@ -79,9 +79,9 @@ begin
   end;
 end;
 
-function TRequest<T>.RequestType(_ARequestType: TRequestOperation): IRequest<T>;
+function TRequest<T>.RequestType(_RequestType: TRequestOperation): IRequest<T>;
 begin
-  FRequestType := _ARequestType;
+  FRequestType := _RequestType;
   Result := Self;
 end;
 
@@ -103,9 +103,9 @@ begin
     raise Exception.Create('URL is empty: TRequest.Get');
 end;
 
-function TRequest<T>.ContentType(_AContentType: TContentType): IRequest<T>;
+function TRequest<T>.ContentType(_ContentType: TContentType): IRequest<T>;
 begin
-  FContentType := _AContentType;
+  FContentType := _ContentType;
   Result := Self;
 end;
 
@@ -143,14 +143,14 @@ begin
   inherited;
 end;
 
-function TRequest<T>.DoRequest(_AStream: TStream): String;
+function TRequest<T>.DoRequest(_Stream: TStream): String;
 begin
   ValidarRequest;
   SetContentType;
 
   case FRequestType of
     roGet:
-      Result := GetRequest(_AStream);
+      Result := GetRequest(_Stream);
 
     roPost:
       Result := PostRequest;
@@ -160,11 +160,11 @@ begin
   end;
 end;
 
-function TRequest<T>.GetRequest(_AStream: TStream): String;
+function TRequest<T>.GetRequest(_Stream: TStream): String;
 begin
   Result := EmptyStr;
   try
-    if _AStream = nil then
+    if _Stream = nil then
     begin
       if (FParametros <> nil) and (FParametros.Count > 0) then
         Result := FIdHTTP.Post(FUrlRequest, FParametros)
@@ -172,13 +172,13 @@ begin
         Result := FIdHTTP.Get(FUrlRequest)
     end
     else
-      FIdHTTP.Get(FUrlRequest, _AStream);
+      FIdHTTP.Get(FUrlRequest, _Stream);
   except
     raise;
   end;
 end;
 
-function TRequest<T>.New(_AUrlRequest: String): IRequest<T>;
+function TRequest<T>.New(_UrlRequest: String): IRequest<T>;
 begin
   Result := inherited Create;
 
@@ -187,7 +187,7 @@ begin
 
   FIdHTTP.IOHandler := FIdSSLIOHandlerSocketOpenSSL;
 
-  FUrlRequest := _AUrlRequest;
+  FUrlRequest := _UrlRequest;
 end;
 
 end.

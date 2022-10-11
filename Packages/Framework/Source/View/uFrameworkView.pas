@@ -13,19 +13,19 @@ type
     FProcessParameters: TProcessParameters;
     FCanClose: Boolean;
 
-    procedure DoOnClose(_ASender: TObject; var _AAction: TCloseAction);
-    procedure DoOnExceptionApplication(_ASender: TObject; _AE: Exception);
+    procedure DoOnClose(_Sender: TObject; var _Action: TCloseAction);
+    procedure DoOnExceptionApplication(_Sender: TObject; _E: Exception);
   protected
     property ParametrosProcesso: TProcessParameters read FProcessParameters;
     property CanClose: Boolean read FCanClose write FCanClose;
 
     procedure PrepareComponents; virtual;
     procedure PrepareEvents; virtual;
-    procedure AddNamesValues<T>(_AComboBoxItems: TStrings); overload;
-    procedure AddNamesValues(_AComboBoxItems: TStrings; _AListaValores: TArray<String>); overload;
+    procedure AddNamesValues<T>(_ComboBoxItems: TStrings); overload;
+    procedure AddNamesValues(_ComboBoxItems: TStrings; _ListaValores: TArray<String>); overload;
   public
-    constructor Create(_AOwner: TComponent); reintroduce; overload; override;
-    constructor Create(_AOwner: TComponent; _AParametrosProcesso: TProcessParameters); reintroduce; overload;
+    constructor Create(_Owner: TComponent); reintroduce; overload; override;
+    constructor Create(_Owner: TComponent; _ParametrosProcesso: TProcessParameters); reintroduce; overload;
   end;
 
 implementation
@@ -37,61 +37,61 @@ uses
 
 { TFrameworkView }
 
-procedure TFrameworkView.AddNamesValues(_AComboBoxItems: TStrings; _AListaValores: TArray<String>);
+procedure TFrameworkView.AddNamesValues(_ComboBoxItems: TStrings; _ListaValores: TArray<String>);
 var
   AValor: String;
 begin
-  _AComboBoxItems.BeginUpdate;
+  _ComboBoxItems.BeginUpdate;
   try
-    _AComboBoxItems.Clear;
+    _ComboBoxItems.Clear;
 
-    for AValor in _AListaValores do
-      _AComboBoxItems.Add(AValor);
+    for AValor in _ListaValores do
+      _ComboBoxItems.Add(AValor);
 
   finally
-    _AComboBoxItems.EndUpdate;
+    _ComboBoxItems.EndUpdate;
   end;
 end;
 
-procedure TFrameworkView.AddNamesValues<T>(_AComboBoxItems: TStrings);
+procedure TFrameworkView.AddNamesValues<T>(_ComboBoxItems: TStrings);
 var
   I: Integer;
   AEnumName: String;
   AEnumValue: Integer;
 begin
   I := 0;
-  _AComboBoxItems.BeginUpdate;
+  _ComboBoxItems.BeginUpdate;
   try
-    _AComboBoxItems.Clear;
+    _ComboBoxItems.Clear;
 
     repeat
       AEnumName := GetEnumName(TypeInfo(T), I);
       AEnumValue := GetEnumValue(TypeInfo(T), AEnumName);
 
       if AEnumValue <> -1 then
-        _AComboBoxItems.Add(AEnumName);
+        _ComboBoxItems.Add(AEnumName);
 
       Inc(I);
 
     until AEnumValue < 0;
   finally
-    _AComboBoxItems.EndUpdate;
+    _ComboBoxItems.EndUpdate;
   end;
 end;
 
-constructor TFrameworkView.Create(_AOwner: TComponent; _AParametrosProcesso: TProcessParameters);
+constructor TFrameworkView.Create(_Owner: TComponent; _ParametrosProcesso: TProcessParameters);
 begin
-  inherited Create(_AOwner);
-  FProcessParameters := _AParametrosProcesso;
+  inherited Create(_Owner);
+  FProcessParameters := _ParametrosProcesso;
 
   Position := poMainFormCenter;
   FormStyle := fsNormal;
   PrepareComponents;
 end;
 
-constructor TFrameworkView.Create(_AOwner: TComponent);
+constructor TFrameworkView.Create(_Owner: TComponent);
 begin
-  inherited Create(_AOwner);
+  inherited Create(_Owner);
 
   Position := poMainFormCenter;
   FormStyle := fsNormal;
@@ -110,7 +110,7 @@ begin
   {$ENDIF}
 end;
 
-procedure TFrameworkView.DoOnClose(_ASender: TObject; var _AAction: TCloseAction);
+procedure TFrameworkView.DoOnClose(_Sender: TObject; var _Action: TCloseAction);
 begin
   if not FCanClose then
     Abort;
@@ -118,9 +118,9 @@ begin
   inherited;
 end;
 
-procedure TFrameworkView.DoOnExceptionApplication(_ASender: TObject; _AE: Exception);
+procedure TFrameworkView.DoOnExceptionApplication(_Sender: TObject; _E: Exception);
 begin
-  TMessageView.New(FMSG_0002).Detail(_AE.Message).Error.Show;
+  TMessageView.New(FMSG_0002).Detail(_E.Message).Error.Show;
   inherited;
 end;
 

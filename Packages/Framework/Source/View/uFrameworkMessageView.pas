@@ -22,18 +22,18 @@ type
     procedure FormShow(Sender: TObject);
   private
     procedure ResizeView;
-    procedure CreateButtons(_AButtonAction: TArray<TButtonAction>);
-    procedure CreateButton(_ACaption: TArray<String>; _AModalResult: TArray<TModalResult>);
-    procedure ConfigureImagem(_AMessageIconType: TMessageIconType);
+    procedure CreateButtons(_ButtonAction: TArray<TButtonAction>);
+    procedure CreateButton(_Caption: TArray<String>; _ModalResult: TArray<TModalResult>);
+    procedure ConfigureImagem(_MessageIconType: TMessageIconType);
 
-    function GetMessage(_AMessage: String): String;
-    function GetTitle(_AMessage: String): String;
-    function GetMemoMessage(_ADetail: String): String;
+    function GetMessage(_Message: String): String;
+    function GetTitle(_Message: String): String;
+    function GetMemoMessage(_Detail: String): String;
   protected
     procedure PrepareComponents; override;
   public
-    constructor CreateMsg(_AMessage: String); overload;
-    constructor CreateMsg(_AMessage: String; _AButtonAction: TArray<TButtonAction>; _AMessageIconType: TMessageIconType; _ADetail: String); overload;
+    constructor CreateMsg(_Message: String); overload;
+    constructor CreateMsg(_Message: String; _ButtonAction: TArray<TButtonAction>; _MessageIconType: TMessageIconType; _Detail: String); overload;
 
     function GetResult: TMessageViewResult;
   end;
@@ -47,21 +47,21 @@ uses
 
 { TFrameworkMessageView }
 
-constructor TFrameworkMessageView.CreateMsg(_AMessage: String);
+constructor TFrameworkMessageView.CreateMsg(_Message: String);
 begin
   inherited Create(nil);
-  LabelTitle.Caption := GetTitle(_AMessage);
-  MemoMessage.Text := GetMessage(_AMessage);
+  LabelTitle.Caption := GetTitle(_Message);
+  MemoMessage.Text := GetMessage(_Message);
 end;
 
-procedure TFrameworkMessageView.ConfigureImagem(_AMessageIconType: TMessageIconType);
+procedure TFrameworkMessageView.ConfigureImagem(_MessageIconType: TMessageIconType);
 begin
   ImageError.AutoSize := True;
   ImageError.Center := True;
   ImageError.Stretch := True;
   ImageError.Transparent := True;
 
-  case _AMessageIconType of
+  case _MessageIconType of
     mitSuccess:
      ImageError.Picture.LoadFromFile(TFrameworkSysInfo.GetFilePathImageSuccess);
 
@@ -76,30 +76,30 @@ begin
   end;
 end;
 
-constructor TFrameworkMessageView.CreateMsg(_AMessage: String; _AButtonAction: TArray<TButtonAction>; _AMessageIconType: TMessageIconType; _ADetail: String);
+constructor TFrameworkMessageView.CreateMsg(_Message: String; _ButtonAction: TArray<TButtonAction>; _MessageIconType: TMessageIconType; _Detail: String);
 begin
-  CreateMsg(_AMessage);
-  CreateButtons(_AButtonAction);
-  ConfigureImagem(_AMessageIconType);
-  MemoMessage.Text := GetMemoMessage(_ADetail);;
+  CreateMsg(_Message);
+  CreateButtons(_ButtonAction);
+  ConfigureImagem(_MessageIconType);
+  MemoMessage.Text := GetMemoMessage(_Detail);;
 end;
 
-procedure TFrameworkMessageView.CreateButton(_ACaption: TArray<String>; _AModalResult: TArray<TModalResult>);
+procedure TFrameworkMessageView.CreateButton(_Caption: TArray<String>; _ModalResult: TArray<TModalResult>);
 var
   I: Integer;
   ACount: Integer;
   AButton: TButton;
 begin
-  if Length(_ACaption) <> Length(_AModalResult) then
+  if Length(_Caption) <> Length(_ModalResult) then
     raise Exception.Create('Parameter incorrects. TFrameworkMessageView.CreateButton');
 
-  ACount := Length(_ACaption);
+  ACount := Length(_Caption);
   for I := 0 to ACount - 1 do
   begin
     AButton := TButton.Create(Self);
     try
-      AButton.Caption := _ACaption[I];
-      AButton.ModalResult := _AModalResult[I];
+      AButton.Caption := _Caption[I];
+      AButton.ModalResult := _ModalResult[I];
       AButton.Align := alRight;
       AButton.Parent := PanelButtons;
     except
@@ -109,11 +109,11 @@ begin
   end;
 end;
 
-procedure TFrameworkMessageView.CreateButtons(_AButtonAction: TArray<TButtonAction>);
+procedure TFrameworkMessageView.CreateButtons(_ButtonAction: TArray<TButtonAction>);
 var
   AButtonAction: TButtonAction;
 begin
-  for AButtonAction in _AButtonAction do
+  for AButtonAction in _ButtonAction do
   begin
     case AButtonAction of
       baOk:
@@ -134,40 +134,40 @@ begin
   BringToFront;
 end;
 
-function TFrameworkMessageView.GetTitle(_AMessage: String): String;
+function TFrameworkMessageView.GetTitle(_Message: String): String;
 var
   APos: Integer;
 begin
-  Result := _AMessage;
-  if not Length(_AMessage) > 0 then
+  Result := _Message;
+  if not Length(_Message) > 0 then
     Exit;
 
-  APos := Pos(MSG_CRLF, _AMessage);
+  APos := Pos(MSG_CRLF, _Message);
   if APos > 0 then
-    Result := Copy(_AMessage, 1, APos - 1);
+    Result := Copy(_Message, 1, APos - 1);
 end;
 
-function TFrameworkMessageView.GetMemoMessage(_ADetail: String): String;
+function TFrameworkMessageView.GetMemoMessage(_Detail: String): String;
 begin
   Result := EmptyStr;
 
   if Length(MemoMessage.Text) > 0 then
-    Result := Format('%s%s%s', [MemoMessage.Text, sLineBreak, _ADetail])
+    Result := Format('%s%s%s', [MemoMessage.Text, sLineBreak, _Detail])
   else
-    Result := _ADetail;
+    Result := _Detail;
 end;
 
-function TFrameworkMessageView.GetMessage(_AMessage: String): String;
+function TFrameworkMessageView.GetMessage(_Message: String): String;
 var
   APos: Integer;
 begin
   Result := EmptyStr;
-  if not Length(_AMessage) > 0 then
+  if not Length(_Message) > 0 then
     Exit;
 
-  APos := Pos(MSG_CRLF, _AMessage);
+  APos := Pos(MSG_CRLF, _Message);
   if APos > 0 then
-    Result := Copy(_AMessage, APos + 2, Length(_AMessage));
+    Result := Copy(_Message, APos + 2, Length(_Message));
   Result := Trim(Result);
 end;
 

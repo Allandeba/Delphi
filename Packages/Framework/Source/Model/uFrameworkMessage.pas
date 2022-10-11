@@ -19,14 +19,14 @@ type
 
   IMessageView = interface
   ['{D1E0111A-749C-4F06-A0C4-8F0D6862D885}']
-    function Args(_AArgs: TArray<String>): IMessageView;
-    function Buttons(_AButtonAction: TArray<TButtonAction>): IMessageView;
+    function Args(_Args: TArray<String>): IMessageView;
+    function Buttons(_ButtonAction: TArray<TButtonAction>): IMessageView;
     function ShowResult: TModalResult;
     function Warning: IMessageView;
     function Success: IMessageView;
     function Error: IMessageView;
     function Dev: IMessageView;
-    function Detail(_ADetail: String): IMessageView;
+    function Detail(_Detail: String): IMessageView;
     function GetResult: TMessageViewResult;
 
     procedure Show;
@@ -40,22 +40,22 @@ type
     FMessageIconType: TMessageIconType;
     FDetail: String;
   public
-    constructor Create(_AMessage: String);
+    constructor Create(_Message: String);
 
-    function Args(_AArgs: TArray<String>): IMessageView;
-    function Buttons(_AButtonAction: TArray<TButtonAction>): IMessageView;
+    function Args(_Args: TArray<String>): IMessageView;
+    function Buttons(_ButtonAction: TArray<TButtonAction>): IMessageView;
     function ShowResult: TModalResult;
     function Warning: IMessageView;
     function Success: IMessageView;
     function Error: IMessageView;
     function Dev: IMessageView;
-    function Detail(_ADetail: String): IMessageView;
+    function Detail(_Detail: String): IMessageView;
     function GetResult: TMessageViewResult;
 
     procedure Show;
     procedure ShowAndAbort;
 
-    class function New(_AMessage: String): IMessageView;
+    class function New(_Message: String): IMessageView;
   end;
 
 implementation
@@ -65,32 +65,32 @@ uses
 
 { TMessageView }
 
-function TMessageView.Args(_AArgs: TArray<String>): IMessageView;
+function TMessageView.Args(_Args: TArray<String>): IMessageView;
 var
   I: Integer;
 begin
-  for I := Low(_AArgs) to High(_AArgs) do
-    FMessage := StringReplace(FMessage, '%s', _AArgs[I], []);
+  for I := Low(_Args) to High(_Args) do
+    FMessage := StringReplace(FMessage, '%s', _Args[I], []);
   Result := Self;
 end;
 
-function TMessageView.Buttons(_AButtonAction: TArray<TButtonAction>): IMessageView;
+function TMessageView.Buttons(_ButtonAction: TArray<TButtonAction>): IMessageView;
 begin
-  FButtonAction := _AButtonAction;
+  FButtonAction := _ButtonAction;
   Result := Self;
 end;
 
-constructor TMessageView.Create(_AMessage: String);
+constructor TMessageView.Create(_Message: String);
 begin
   inherited Create;
   FButtonAction := [baOk];
-  FMessage := _AMessage;
+  FMessage := _Message;
   FMessageIconType := mitWarning;
 end;
 
-function TMessageView.Detail(_ADetail: String): IMessageView;
+function TMessageView.Detail(_Detail: String): IMessageView;
 begin
-  FDetail := _ADetail;
+  FDetail := _Detail;
   Result := Self;
 end;
 
@@ -118,9 +118,9 @@ begin
   end;
 end;
 
-class function TMessageView.New(_AMessage: String): IMessageView;
+class function TMessageView.New(_Message: String): IMessageView;
 begin
-  Result := Self.Create(_AMessage);
+  Result := Self.Create(_Message);
 end;
 
 procedure TMessageView.Show;

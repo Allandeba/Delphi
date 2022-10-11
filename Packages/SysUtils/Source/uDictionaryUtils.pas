@@ -8,24 +8,24 @@ uses
 type
   TDictionaryUtils = class
   public
-    class procedure AtualizaValor(_ADictionary: TDictionary<Integer, Integer>; _AValor: Integer);
+    class procedure AtualizaValor(_Dictionary: TDictionary<Integer, Integer>; _Value: Integer);
   end;
 
 implementation
 
 { TDictionaryUtils }
 
-class procedure TDictionaryUtils.AtualizaValor(_ADictionary: TDictionary<Integer, Integer>; _AValor: Integer);
+class procedure TDictionaryUtils.AtualizaValor(_Dictionary: TDictionary<Integer, Integer>; _Value: Integer);
 var
   APair: TPair<Integer, Integer>;
   AQtdRepetido: Integer;
 begin
-  APair := _ADictionary.ExtractPair(_AValor);
+  APair := _Dictionary.ExtractPair(_Value);
   AQtdRepetido := APair.Value;
   Inc(AQtdRepetido);
 
-  _ADictionary.Remove(APair.Key);
-  _ADictionary.Add(APair.Key, AQtdRepetido);
+  _Dictionary.Remove(APair.Key);
+  _Dictionary.Add(APair.Key, AQtdRepetido);
 end;
 
 end.
