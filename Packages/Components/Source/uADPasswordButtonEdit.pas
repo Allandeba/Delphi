@@ -23,31 +23,37 @@ type
 
     procedure CreateImageList;
     procedure ConfigreImageList;
-    procedure AddNewImage(_AFileName: string);
+    procedure AddNewImage(_FileName: string);
+    procedure SetRightButtonImage(_ActivePasswordView: Boolean);
 
-    procedure DoOnRightButtonClick(_ASender: TObject);
+    procedure DoOnRightButtonClick(_Sender: TObject);
+    procedure DoOnMouseLeave(_Sender: TObject);
   public
-    constructor Create(_AOwner: TComponent); override;
+    constructor Create(_Owner: TComponent); override;
     destructor Destroy; override;
 
-    procedure AddImages(_AImagePasswordButtonEditList: TImagePasswordButtonEditList);
+    procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
     property ImageList: TImageList read FImageList;
   end;
 
-  TDAPasswordButtonedEdit = class(TPanel)
+  TADPasswordButtonedEdit = class(TCustomPanel)
   strict private
     FPasswordButtonEdit: TPasswordButtonedEdit;
-    FLabelCaption: TLabel;
+    FInnerLabelCaption: TLabel;
     FLabelPanel: TPanel;
 
-    procedure ConfigureMainPanel(_AOwner: TComponent);
+    procedure ConfigureMainPanel(_Owner: TComponent);
     procedure ConfigureLabelPanel;
     procedure ConfigurePasswordButtonedEdit;
     procedure ConfigureLabelCaption;
-  published
-    property LabelCaption: TLabel read FLabelCaption;
+
+    function GetLabelCaption: TCaption;
+    procedure SetLabelCaption(_Caption: TCaption);
   public
-    constructor Create(_AOwner: TComponent); override;
+    constructor Create(_Owner: TComponent); override;
+  published
+    property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
+    procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
   end;
 
 procedure Register;
@@ -59,37 +65,37 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('Allan Debastiani', [TDAPasswordButtonedEdit]);
+  RegisterComponents('Allan Debastiani', [TADPasswordButtonedEdit]);
 end;
 
-procedure TPasswordButtonedEdit.AddImages(_AImagePasswordButtonEditList: TImagePasswordButtonEditList);
+procedure TPasswordButtonedEdit.AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
 var
   I: Integer;
 begin
   FImageList.Clear;
 
-  for I := 0 to _AImagePasswordButtonEditList.Count - 1 do
+  for I := 0 to _ImagePasswordButtonEditList.Count - 1 do
   begin
     if I > 1 then
       raise Exception.Create('Not expected more then 2 images to the component');
 
-    if _AImagePasswordButtonEditList[I].IsPressedImage then
+    if _ImagePasswordButtonEditList[I].IsPressedImage then
       RightButton.PressedImageIndex := I
     else
       RightButton.ImageIndex := I;
 
-    AddNewImage(_AImagePasswordButtonEditList[I].Filename);
+    AddNewImage(_ImagePasswordButtonEditList[I].Filename);
   end;
 end;
 
-procedure TPasswordButtonedEdit.AddNewImage(_AFileName: string);
+procedure TPasswordButtonedEdit.AddNewImage(_FileName: string);
 var
   APngImage: TPngImage;
   AImageBmp: TBitmap;
 begin
   APngImage := TPngImage.Create;
   try
-    APngImage.LoadFromFile(_AFileName);
+    APngImage.LoadFromFile(_FileName);
 
     AImageBmp := TBitmap.Create;
     try
@@ -116,12 +122,13 @@ begin
   FImageList.Height := 16;
 end;
 
-constructor TPasswordButtonedEdit.Create(_AOwner: TComponent);
+constructor TPasswordButtonedEdit.Create(_Owner: TComponent);
 begin
   inherited;
   CreateImageList;
 
   OnRightButtonClick := DoOnRightButtonClick;
+  OnMouseLeave := DoOnMouseLeave;
 end;
 
 procedure TPasswordButtonedEdit.CreateImageList;
@@ -137,40 +144,60 @@ begin
   inherited;
 end;
 
-procedure TPasswordButtonedEdit.DoOnRightButtonClick(_ASender: TObject);
+procedure TPasswordButtonedEdit.DoOnMouseLeave(_Sender: TObject);
+begin
+  SetRightButtonImage(True);
+end;
+
+procedure TPasswordButtonedEdit.DoOnRightButtonClick(_Sender: TObject);
 begin
   if FImageList.Count = 0 then
     raise Exception.Create('You may use the procedure "AddImages()" to use your own icons to the button');
 
   case RightButton.HotImageIndex of
-    0:
-    begin
-      RightButton.HotImageIndex := 1;
-      PasswordChar := #0;
-    end;
-
-    1:
-    begin
-      RightButton.HotImageIndex := 0;
-      PasswordChar := '*';
-    end
+    0: SetRightButtonImage(False);
+    1: SetRightButtonImage(True);
   else
     raise Exception.Create('ImageIndex: ' + IntToStr(RightButton.HotImageIndex) + 'not expected');
   end;
 end;
 
+procedure TPasswordButtonedEdit.SetRightButtonImage(_ActivePasswordView: Boolean);
+begin
+  if _ActivePasswordView then
+  begin
+    RightButton.HotImageIndex := 0;
+    PasswordChar := '*';
+  end
+  else
+  begin
+    RightButton.HotImageIndex := 1;
+    PasswordChar := #0;
+  end;
+end;
+
 { TDAPasswordButtonedEdit }
 
-constructor TDAPasswordButtonedEdit.Create(_AOwner: TComponent);
+constructor TADPasswordButtonedEdit.Create(_Owner: TComponent);
 begin
   inherited;
-  ConfigureMainPanel(_AOwner);
+  ConfigureMainPanel(_Owner);
   ConfigureLabelPanel;
   ConfigureLabelCaption;
   ConfigurePasswordButtonedEdit;
 end;
 
-procedure TDAPasswordButtonedEdit.ConfigurePasswordButtonedEdit;
+function TADPasswordButtonedEdit.GetLabelCaption: TCaption;
+begin
+  Result := FInnerLabelCaption.Caption;
+end;
+
+procedure TADPasswordButtonedEdit.SetLabelCaption(_Caption: TCaption);
+begin
+  FInnerLabelCaption.Caption := _Caption;
+end;
+
+procedure TADPasswordButtonedEdit.ConfigurePasswordButtonedEdit;
 begin
   FPasswordButtonEdit := TPasswordButtonedEdit.Create(Self);
 
@@ -187,16 +214,21 @@ begin
   FPasswordButtonEdit.RightButton.Visible := True;
 end;
 
-procedure TDAPasswordButtonedEdit.ConfigureLabelCaption;
+procedure TADPasswordButtonedEdit.AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
 begin
-  FLabelCaption := TLabel.Create(FLabelPanel);
-  FLabelCaption.Parent := FLabelPanel;
-  FLabelCaption.Caption := 'Caption do Label';
-  FLabelCaption.Align := alTop;
-  FLabelCaption.Alignment := taLeftJustify;
+  FPasswordButtonEdit.AddImages(_ImagePasswordButtonEditList);
 end;
 
-procedure TDAPasswordButtonedEdit.ConfigureLabelPanel;
+procedure TADPasswordButtonedEdit.ConfigureLabelCaption;
+begin
+  FInnerLabelCaption := TLabel.Create(FLabelPanel);
+  FInnerLabelCaption.Parent := FLabelPanel;
+  FInnerLabelCaption.Caption := 'TDAPasswordButtonedEdit';
+  FInnerLabelCaption.Align := alTop;
+  FInnerLabelCaption.Alignment := taLeftJustify;
+end;
+
+procedure TADPasswordButtonedEdit.ConfigureLabelPanel;
 begin
   FLabelPanel := TPanel.Create(Self);
   FLabelPanel.Height := 20;
@@ -207,7 +239,7 @@ begin
   FLabelPanel.Align := alTop;
 end;
 
-procedure TDAPasswordButtonedEdit.ConfigureMainPanel(_AOwner: TComponent);
+procedure TADPasswordButtonedEdit.ConfigureMainPanel(_Owner: TComponent);
 begin
   Height := 40;
   Width := 150;
