@@ -172,7 +172,10 @@ begin
         Result := FIdHTTP.Get(FUrlRequest)
     end
     else
+    begin
+      FIdHTTP.HandleRedirects := True;
       FIdHTTP.Get(FUrlRequest, _Stream);
+    end;
   except
     raise;
   end;
