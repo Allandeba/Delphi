@@ -17,7 +17,7 @@ type
 
   TImagePasswordButtonEditList = class(TObjectList<TImagePasswordButtonEdit>);
 
-  TPasswordButtonedEdit = class(TCustomButtonedEdit)
+  TPasswordButtonedEdit = class(TButtonedEdit)
   strict private
     FImageList: TImageList;
 
@@ -38,7 +38,7 @@ type
 
   TADPasswordButtonedEdit = class(TCustomPanel)
   strict private
-    FPasswordButtonEdit: TPasswordButtonedEdit;
+    FPasswordButtonedEdit: TPasswordButtonedEdit;
     FInnerLabelCaption: TLabel;
     FLabelPanel: TPanel;
 
@@ -52,8 +52,10 @@ type
   public
     constructor Create(_Owner: TComponent); override;
   published
-    property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
     procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
+
+    property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
+    property PasswordButtonedEdit: TPasswordButtonedEdit read FPasswordButtonedEdit;
   end;
 
 procedure Register;
@@ -199,24 +201,24 @@ end;
 
 procedure TADPasswordButtonedEdit.ConfigurePasswordButtonedEdit;
 begin
-  FPasswordButtonEdit := TPasswordButtonedEdit.Create(Self);
+  FPasswordButtonedEdit := TPasswordButtonedEdit.Create(Self);
 
-  FPasswordButtonEdit.Left := 0;
-  FPasswordButtonEdit.Parent := Self;
-  FPasswordButtonEdit.Align := alClient;
-  FPasswordButtonEdit.Alignment := taLeftJustify;
-  FPasswordButtonEdit.PasswordChar := '*';
+  FPasswordButtonedEdit.Left := 0;
+  FPasswordButtonedEdit.Parent := Self;
+  FPasswordButtonedEdit.Align := alClient;
+  FPasswordButtonedEdit.Alignment := taLeftJustify;
+  FPasswordButtonedEdit.PasswordChar := '*';
 
-  FPasswordButtonEdit.RightButton.ImageIndex := 0;
-  FPasswordButtonEdit.RightButton.HotImageIndex := 0;
-  FPasswordButtonEdit.RightButton.PressedImageIndex := 1;
-  FPasswordButtonEdit.RightButton.Enabled := True;
-  FPasswordButtonEdit.RightButton.Visible := True;
+  FPasswordButtonedEdit.RightButton.ImageIndex := 0;
+  FPasswordButtonedEdit.RightButton.HotImageIndex := 0;
+  FPasswordButtonedEdit.RightButton.PressedImageIndex := 1;
+  FPasswordButtonedEdit.RightButton.Enabled := True;
+  FPasswordButtonedEdit.RightButton.Visible := True;
 end;
 
 procedure TADPasswordButtonedEdit.AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
 begin
-  FPasswordButtonEdit.AddImages(_ImagePasswordButtonEditList);
+  FPasswordButtonedEdit.AddImages(_ImagePasswordButtonEditList);
 end;
 
 procedure TADPasswordButtonedEdit.ConfigureLabelCaption;
