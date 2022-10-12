@@ -15,6 +15,8 @@ type
 
     procedure DoOnClose(_Sender: TObject; var _Action: TCloseAction);
     procedure DoOnExceptionApplication(_Sender: TObject; _E: Exception);
+
+    procedure DefaultInitialization;
   protected
     property ParametrosProcesso: TProcessParameters read FProcessParameters;
     property CanClose: Boolean read FCanClose write FCanClose;
@@ -84,19 +86,14 @@ begin
   inherited Create(_Owner);
   FProcessParameters := _ParametrosProcesso;
 
-  Position := poMainFormCenter;
-  FormStyle := fsNormal;
-  PrepareComponents;
+  DefaultInitialization;
 end;
 
 constructor TFrameworkView.Create(_Owner: TComponent);
 begin
   inherited Create(_Owner);
 
-  Position := poMainFormCenter;
-  FormStyle := fsNormal;
-  PrepareComponents;
-  PrepareEvents;
+  DefaultInitialization;
 end;
 
 procedure TFrameworkView.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -108,6 +105,14 @@ begin
   if Key = VK_F1 then
     TMessageView.New(Format(FMSG_0001, [Name])).Dev.Show;
   {$ENDIF}
+end;
+
+procedure TFrameworkView.DefaultInitialization;
+begin
+  Position := poMainFormCenter;
+  FormStyle := fsNormal;
+  PrepareComponents;
+  PrepareEvents;
 end;
 
 procedure TFrameworkView.DoOnClose(_Sender: TObject; var _Action: TCloseAction);
