@@ -3,7 +3,7 @@ unit uStrHelper;
 interface
 
 uses
-  Vcl.Controls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.ExtCtrls, System.SysUtils, System.MaskUtils;
 
 type
 
@@ -15,14 +15,17 @@ type
     function IsEmpty: Boolean;
   end;
 
-  TLabedEditHelper = class helper for TCustomLabeledEdit
+  TUnicodeStringHelper = record helper for UnicodeString
+    function Trim: string;
+    function IsEmpty: Boolean;
+  end;
+
+  TMaskedTextHelper = record helper for TMaskedText
+    function Trim: string;
     function IsEmpty: Boolean;
   end;
 
 implementation
-
-uses
-  System.SysUtils;
 
 { TStringHelper }
 
@@ -38,11 +41,28 @@ begin
   Result := Length(Trim(Self)) = 0;
 end;
 
-{ TLabedEditHelper }
+{ TUnicodeStringHelper }
 
-function TLabedEditHelper.IsEmpty: Boolean;
+function TUnicodeStringHelper.Trim: String;
 begin
-  Result := Length(Trim(Text)) = 0;
+  Result := System.SysUtils.Trim(Self);
+end;
+
+function TUnicodeStringHelper.IsEmpty: Boolean;
+begin
+  Result := Length(Self.Trim) = 0;
+end;
+
+{ TMaskedTextHelper }
+
+function TMaskedTextHelper.Trim: string;
+begin
+  Result := System.SysUtils.Trim(Self);
+end;
+
+function TMaskedTextHelper.IsEmpty: Boolean;
+begin
+  Result := Length(Self.Trim) = 0;
 end;
 
 end.
