@@ -49,13 +49,21 @@ type
 
     function GetLabelCaption: TCaption;
     procedure SetLabelCaption(_Caption: TCaption);
-  public
-    constructor Create(_Owner: TComponent); override;
+
+    function GetPasswordButtonedEditText: String;
+    procedure SetPasswordButtonedEditText(_Value: String);
+
+    function GetOnKeyDown: TKeyEvent;
+    procedure SetOnKeyDown(_KeyEvent: TKeyEvent);
   published
     procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
 
     property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
-    property PasswordButtonedEdit: TPasswordButtonedEdit read FPasswordButtonedEdit;
+    property Text: String read GetPasswordButtonedEditText write SetPasswordButtonedEditText;
+
+    property OnKeyDown: TKeyEvent read GetOnKeyDown write SetOnKeyDown;
+  public
+    constructor Create(_Owner: TComponent); override;
   end;
 
 procedure Register;
@@ -189,14 +197,34 @@ begin
   ConfigurePasswordButtonedEdit;
 end;
 
+function TADPasswordButtonedEdit.GetPasswordButtonedEditText: String;
+begin
+  Result := FPasswordButtonedEdit.Text;
+end;
+
+procedure TADPasswordButtonedEdit.SetPasswordButtonedEditText(_Value: string);
+begin
+  FPasswordButtonedEdit.Text := _Value;
+end;
+
 function TADPasswordButtonedEdit.GetLabelCaption: TCaption;
 begin
   Result := FInnerLabelCaption.Caption;
 end;
 
+function TADPasswordButtonedEdit.GetOnKeyDown: TKeyEvent;
+begin
+  Result := FPasswordButtonedEdit.OnKeyDown;
+end;
+
 procedure TADPasswordButtonedEdit.SetLabelCaption(_Caption: TCaption);
 begin
   FInnerLabelCaption.Caption := _Caption;
+end;
+
+procedure TADPasswordButtonedEdit.SetOnKeyDown(_KeyEvent: TKeyEvent);
+begin
+  FPasswordButtonedEdit.OnKeyDown := _KeyEvent;
 end;
 
 procedure TADPasswordButtonedEdit.ConfigurePasswordButtonedEdit;
@@ -233,7 +261,7 @@ end;
 procedure TADPasswordButtonedEdit.ConfigureLabelPanel;
 begin
   FLabelPanel := TPanel.Create(Self);
-  FLabelPanel.Height := 20;
+  FLabelPanel.Height := 10;
   FLabelPanel.Left := 0;
   FLabelPanel.BevelOuter := bvNone;
   FLabelPanel.BorderStyle := bsNone;
@@ -245,7 +273,7 @@ procedure TADPasswordButtonedEdit.ConfigureMainPanel(_Owner: TComponent);
 begin
   Height := 40;
   Width := 150;
-  Left := 10;
+  Left := 0;
   BevelOuter := bvNone;
   BorderStyle := bsNone;
   Caption := '';
