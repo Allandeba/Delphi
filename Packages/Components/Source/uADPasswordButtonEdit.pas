@@ -36,7 +36,7 @@ type
     property ImageList: TImageList read FImageList;
   end;
 
-  TADPasswordButtonedEdit = class(TCustomPanel)
+  TADPasswordButtonedEdit = class(TPanel)
   strict private
     FPasswordButtonedEdit: TPasswordButtonedEdit;
     FInnerLabelCaption: TLabel;
@@ -49,21 +49,22 @@ type
 
     function GetLabelCaption: TCaption;
     procedure SetLabelCaption(_Caption: TCaption);
-
     function GetPasswordButtonedEditText: String;
-    procedure SetPasswordButtonedEditText(_Value: String);
+    procedure SetPasswordButtonedEditText(_Text: String);
 
     function GetOnKeyDown: TKeyEvent;
     procedure SetOnKeyDown(_KeyEvent: TKeyEvent);
   published
-    procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
-
     property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
     property Text: String read GetPasswordButtonedEditText write SetPasswordButtonedEditText;
 
     property OnKeyDown: TKeyEvent read GetOnKeyDown write SetOnKeyDown;
   public
     constructor Create(_Owner: TComponent); override;
+    procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
+
+    procedure SetFocus; override;
+    function CanFocus: Boolean; override;
   end;
 
 procedure Register;
@@ -202,9 +203,9 @@ begin
   Result := FPasswordButtonedEdit.Text;
 end;
 
-procedure TADPasswordButtonedEdit.SetPasswordButtonedEditText(_Value: string);
+procedure TADPasswordButtonedEdit.SetPasswordButtonedEditText(_Text: String);
 begin
-  FPasswordButtonedEdit.Text := _Value;
+  FPasswordButtonedEdit.Text := _Text;
 end;
 
 function TADPasswordButtonedEdit.GetLabelCaption: TCaption;
@@ -215,6 +216,11 @@ end;
 function TADPasswordButtonedEdit.GetOnKeyDown: TKeyEvent;
 begin
   Result := FPasswordButtonedEdit.OnKeyDown;
+end;
+
+procedure TADPasswordButtonedEdit.SetFocus;
+begin
+  FPasswordButtonedEdit.SetFocus;
 end;
 
 procedure TADPasswordButtonedEdit.SetLabelCaption(_Caption: TCaption);
@@ -249,6 +255,11 @@ begin
   FPasswordButtonedEdit.AddImages(_ImagePasswordButtonEditList);
 end;
 
+function TADPasswordButtonedEdit.CanFocus: Boolean;
+begin
+  Result := FPasswordButtonedEdit.CanFocus;
+end;
+
 procedure TADPasswordButtonedEdit.ConfigureLabelCaption;
 begin
   FInnerLabelCaption := TLabel.Create(FLabelPanel);
@@ -261,7 +272,7 @@ end;
 procedure TADPasswordButtonedEdit.ConfigureLabelPanel;
 begin
   FLabelPanel := TPanel.Create(Self);
-  FLabelPanel.Height := 10;
+  FLabelPanel.Height := 15;
   FLabelPanel.Left := 0;
   FLabelPanel.BevelOuter := bvNone;
   FLabelPanel.BorderStyle := bsNone;
