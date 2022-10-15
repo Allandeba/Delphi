@@ -6,7 +6,6 @@ uses
   Vcl.Controls, Vcl.ExtCtrls, System.SysUtils, System.MaskUtils;
 
 type
-
   TStringHelper = record helper for String
     function IsEmpty: Boolean;
   end;
