@@ -102,7 +102,7 @@
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="vcl.dcp"/>
         <DCCReference Include="vclimg.dcp"/>
-        <DCCReference Include="Source\uADPasswordButtonEdit.pas"/>
+        <DCCReference Include="Source\uADPasswordButtonedEdit.pas"/>
         <DCCReference Include="Source\uADComboBox.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

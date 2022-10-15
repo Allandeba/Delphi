@@ -33,7 +33,7 @@ requires
   vclimg;
 
 contains
-  uADPasswordButtonEdit in 'Source\uADPasswordButtonEdit.pas',
+  uADPasswordButtonedEdit in 'Source\uADPasswordButtonedEdit.pas',
   uADComboBox in 'Source\uADComboBox.pas';
 
 end.
