@@ -187,7 +187,6 @@ procedure TFrameworkMessageView.PrepareComponents;
 begin
   inherited;
   BorderStyle := bsDialog;
-//  AutoSize := True;
 
   PanelButtons.Padding.Top := 3;
   PanelButtons.Padding.Bottom := 3;
