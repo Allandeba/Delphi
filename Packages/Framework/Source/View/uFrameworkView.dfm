@@ -1,8 +1,8 @@
 object FrameworkView: TFrameworkView
   Left = 0
   Top = 0
-  ClientHeight = 433
-  ClientWidth = 592
+  ClientHeight = 412
+  ClientWidth = 508
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

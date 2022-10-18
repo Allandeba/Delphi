@@ -3,7 +3,7 @@ unit uFrameworkMessageView;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.Menus, Vcl.ExtCtrls, uFrameworkEnums, Vcl.StdCtrls, Vcl.Imaging.pngimage, uFrameworkView,
   uFrameworkMessage;
 
@@ -27,6 +27,7 @@ type
     procedure ConfigureImagem(_MessageIconType: TMessageIconType);
 
     function GetMessage(_Message: String): String;
+    function GetDetailMessage(_Detail: String): String;
     function GetTitle(_Message: String): String;
     function GetMemoMessage(_Detail: String): String;
   protected
@@ -41,7 +42,7 @@ type
 implementation
 
 uses
-  uFrameworkMessages, uFrameworkSysInfo;
+  uFrameworkMessages, uFrameworkSysInfo, System.SysUtils;
 
 {$R *.dfm}
 
@@ -147,14 +148,22 @@ begin
     Result := Copy(_Message, 1, APos - 1);
 end;
 
+function TFrameworkMessageView.GetDetailMessage(_Detail: String): String;
+begin
+  Result := StringReplace(_Detail, MSG_CRLF, sLineBreak, [rfReplaceAll, rfIgnoreCase]);
+end;
+
 function TFrameworkMessageView.GetMemoMessage(_Detail: String): String;
+var
+  ADetail: String;
 begin
   Result := EmptyStr;
 
+  ADetail := GetDetailMessage(_Detail);
   if Length(MemoMessage.Text) > 0 then
-    Result := Format('%s%s%s', [MemoMessage.Text, sLineBreak, _Detail])
+    Result := Format('%s%s%s', [MemoMessage.Text, sLineBreak, ADetail])
   else
-    Result := _Detail;
+    Result := ADetail;
 end;
 
 function TFrameworkMessageView.GetMessage(_Message: String): String;
