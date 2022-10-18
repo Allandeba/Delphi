@@ -114,7 +114,7 @@
         <DCCReference Include="Source\uDictionaryUtils.pas"/>
         <DCCReference Include="Source\uStrUtils.pas"/>
         <DCCReference Include="Source\uRequest.pas"/>
-        <DCCReference Include="Source\uJSON.pas"/>
+        <DCCReference Include="Source\uJSONUtils.pas"/>
         <DCCReference Include="Source\uStrHelper.pas"/>
         <DCCReference Include="Source\uObjectHelper.pas"/>
         <BuildConfiguration Include="Base">

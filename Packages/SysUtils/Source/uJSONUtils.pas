@@ -1,4 +1,4 @@
-unit uJSON;
+unit uJSONUtils;
 
 interface
 
@@ -8,7 +8,9 @@ type
     class function DecodeBase64(_Content: String): String;
   public
     class function Parse(_ValueNameToGet: String; _ContentToParse: Variant; _WhereToFindIt: String; _Decode64: Boolean): T; overload;
+    class function Parse(_ValueNameToGet: String; _ContentToParse: Variant; _WhereToFindIt: String): T; overload;
     class function Parse(_ValueNameToGet: String; _ContentToParse: Variant; _Decode64: Boolean): T; overload;
+    class function Parse(_ValueNameToGet: String; _ContentToParse: Variant): T; overload;
   end;
 
 implementation
@@ -46,10 +48,8 @@ begin
             Result := Parse(_ValueNameToGet, AJSONValueInside.ToString, False)
       end
       else
-      begin
         if AJSONValue.TryGetValue<TJSONValue>(_WhereToFindIt, AJSONValueInside) then
           Result := Parse(_ValueNameToGet, AJSONValueInside.ToString, False)
-      end;
     finally
       AJSONValue.Free;
     end;
@@ -87,6 +87,16 @@ begin
   finally
     AJSONValue.Free;
   end;
+end;
+
+class function TJSONUtils<T>.Parse(_ValueNameToGet: String; _ContentToParse: Variant): T;
+begin
+  Result := Parse(_ValueNameToGet, _ContentToParse, '', False);
+end;
+
+class function TJSONUtils<T>.Parse(_ValueNameToGet: String; _ContentToParse: Variant; _WhereToFindIt: String): T;
+begin
+  Result := Parse(_ValueNameToGet, _ContentToParse, _WhereToFindIt, False);
 end;
 
 end.
