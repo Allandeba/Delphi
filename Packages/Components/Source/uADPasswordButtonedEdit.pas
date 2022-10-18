@@ -63,6 +63,7 @@ type
     constructor Create(_Owner: TComponent); override;
     procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
 
+    procedure Clear;
     procedure SetFocus; override;
     function CanFocus: Boolean; override;
   end;
@@ -258,6 +259,11 @@ end;
 function TADPasswordButtonedEdit.CanFocus: Boolean;
 begin
   Result := FPasswordButtonedEdit.CanFocus;
+end;
+
+procedure TADPasswordButtonedEdit.Clear;
+begin
+  FPasswordButtonedEdit.Clear;
 end;
 
 procedure TADPasswordButtonedEdit.ConfigureLabelCaption;
