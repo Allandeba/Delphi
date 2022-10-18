@@ -19,11 +19,21 @@ type
 
     function GetLabelCaption: TCaption;
     procedure SetLabelCaption(_Caption: TCaption);
+    function GetOnKeyDown: TKeyEvent;
+    procedure SetOnKeyDown(_KeyEvent: TKeyEvent);
+    function GetOnChange: TNotifyEvent;
+    procedure SetOnChange(_NotifyEvent: TNotifyEvent);
+    function GetOnKeyPress: TKeyPressEvent;
+    procedure SetOnKeyPress(_KeyPressEvent: TKeyPressEvent);
   public
       constructor Create(_Owner: TComponent); override;
   published
     property ComboBox: TComboBox read FComboBox;
     property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
+
+    property OnKeyDown: TKeyEvent read GetOnKeyDown write SetOnKeyDown;
+    property OnKeyPress: TKeyPressEvent read GetOnKeyPress write SetOnKeyPress;
+    property OnChange: TNotifyEvent read GetOnChange write SetOnChange;
   end;
 
 procedure Register;
@@ -92,9 +102,39 @@ begin
   Result := FInnerLabelCaption.Caption;
 end;
 
+function TADComboBox.GetOnChange: TNotifyEvent;
+begin
+  Result := FComboBox.OnChange;
+end;
+
+function TADComboBox.GetOnKeyDown: TKeyEvent;
+begin
+  Result := FComboBox.OnKeyDown;
+end;
+
+function TADComboBox.GetOnKeyPress: TKeyPressEvent;
+begin
+  Result := FComboBox.OnKeyPress;
+end;
+
 procedure TADComboBox.SetLabelCaption(_Caption: TCaption);
 begin
   FInnerLabelCaption.Caption := _Caption;
+end;
+
+procedure TADComboBox.SetOnChange(_NotifyEvent: TNotifyEvent);
+begin
+  FComboBox.OnChange := _NotifyEvent;
+end;
+
+procedure TADComboBox.SetOnKeyDown(_KeyEvent: TKeyEvent);
+begin
+  FComboBox.OnKeyDown := _KeyEvent;
+end;
+
+procedure TADComboBox.SetOnKeyPress(_KeyPressEvent: TKeyPressEvent);
+begin
+  FComboBox.OnKeyPress := _KeyPressEvent;
 end;
 
 end.
