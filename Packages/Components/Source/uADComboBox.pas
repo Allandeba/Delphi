@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, Vcl.Controls, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
-  TADComboBox = class(TCustomPanel)
+  TADComboBox = class(TPanel)
   strict private
     FInnerLabelCaption: TLabel;
     FLabelPanel: TPanel;
