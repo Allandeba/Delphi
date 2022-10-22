@@ -36,7 +36,7 @@ type
     property ImageList: TImageList read FImageList;
   end;
 
-  TADPasswordButtonedEdit = class(TPanel)
+  TADPasswordButtonedEdit = class(TCustomPanel)
   strict private
     FPasswordButtonedEdit: TPasswordButtonedEdit;
     FInnerLabelCaption: TLabel;
@@ -54,11 +54,6 @@ type
 
     function GetOnKeyDown: TKeyEvent;
     procedure SetOnKeyDown(_KeyEvent: TKeyEvent);
-  published
-    property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
-    property Text: String read GetPasswordButtonedEditText write SetPasswordButtonedEditText;
-
-    property OnKeyDown: TKeyEvent read GetOnKeyDown write SetOnKeyDown;
   public
     constructor Create(_Owner: TComponent); override;
     procedure AddImages(_ImagePasswordButtonEditList: TImagePasswordButtonEditList);
@@ -66,6 +61,13 @@ type
     procedure Clear;
     procedure SetFocus; override;
     function CanFocus: Boolean; override;
+  published
+    property LabelCaption: TCaption read GetLabelCaption write SetLabelCaption;
+    property Text: String read GetPasswordButtonedEditText write SetPasswordButtonedEditText;
+    property TabOrder;
+    property BevelOuter;
+
+    property OnKeyDown: TKeyEvent read GetOnKeyDown write SetOnKeyDown;
   end;
 
 procedure Register;
@@ -273,6 +275,7 @@ begin
   FInnerLabelCaption.Caption := 'TDAPasswordButtonedEdit';
   FInnerLabelCaption.Align := alTop;
   FInnerLabelCaption.Alignment := taLeftJustify;
+  FInnerLabelCaption.Height := 15;
 end;
 
 procedure TADPasswordButtonedEdit.ConfigureLabelPanel;
