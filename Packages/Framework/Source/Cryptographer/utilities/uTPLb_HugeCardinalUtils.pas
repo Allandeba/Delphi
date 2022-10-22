@@ -128,7 +128,7 @@ implementation
 
 
 uses SysUtils, Classes, uTPLb_IntegerUtils,
-     uTPLb_I18n, Math;
+     uTPLb_I18n;
 
 const
   SmallPrimeSetCardinality = 200;

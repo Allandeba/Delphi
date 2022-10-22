@@ -102,7 +102,7 @@ implementation
 
 
 
-uses SysUtils, Math, uTPLb_StreamUtils, uTPLb_Constants, uTPLb_StreamToBlock,
+uses SysUtils, uTPLb_StreamUtils, uTPLb_Constants, uTPLb_StreamToBlock,
      uTPLb_CBC, uTPLb_Random
 {$IF compilerversion <= 17}
 , uTPLb_D7Compatibility

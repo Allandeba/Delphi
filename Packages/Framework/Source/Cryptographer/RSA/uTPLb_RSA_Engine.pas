@@ -193,7 +193,7 @@ implementation
 
 
 
-uses uTPLb_RSA_Primitives, SysUtils, Math, uTPLb_HugeCardinalUtils,
+uses uTPLb_RSA_Primitives, SysUtils, uTPLb_HugeCardinalUtils,
      uTPLB_Constants, uTPLb_I18n;
 
 { TRSA_Engine }
