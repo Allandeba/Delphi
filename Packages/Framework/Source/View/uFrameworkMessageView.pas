@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.Menus, Vcl.ExtCtrls, uFrameworkEnums, Vcl.StdCtrls, Vcl.Imaging.pngimage, uFrameworkView,
+  Vcl.ExtCtrls, uFrameworkEnums, Vcl.StdCtrls, uFrameworkView,
   uFrameworkMessage;
 
 type
@@ -217,6 +217,9 @@ begin
 end;
 
 procedure TFrameworkMessageView.ResizeView;
+const
+  MIN_HEIGHT = 144;
+  MIN_WIDTH = 470;
 var
   AIsEmptyMessage: Boolean;
   ATotalSizeNecessary: Integer;
@@ -226,9 +229,15 @@ begin
 
   if AIsEmptyMessage then
   begin
-    ATotalSizeNecessary := PanelImage.Height + PanelButtons.Height + PanelMessageTitle.Height;    
+    ATotalSizeNecessary := PanelImage.Height + PanelButtons.Height + PanelMessageTitle.Height;
     Height :=  ATotalSizeNecessary - PanelMessageDetail.Height;
   end;
+
+  if Height < MIN_HEIGHT then
+    Height := MIN_HEIGHT;
+
+  if Width < MIN_WIDTH then
+    Width := MIN_WIDTH;
 end;
 
 end.
