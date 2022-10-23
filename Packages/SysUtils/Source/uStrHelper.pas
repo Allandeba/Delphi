@@ -3,7 +3,7 @@ unit uStrHelper;
 interface
 
 uses
-  Vcl.Controls, Vcl.ExtCtrls, System.SysUtils, System.MaskUtils;
+  Vcl.Controls, System.SysUtils, System.MaskUtils;
 
 type
   TStringHelper = record helper for String
@@ -12,6 +12,7 @@ type
 
   TCaptionHelper = record helper for TCaption
     function IsEmpty: Boolean;
+    function Trim: string;
   end;
 
   TUnicodeStringHelper = record helper for UnicodeString
@@ -30,14 +31,19 @@ implementation
 
 function TStringHelper.IsEmpty: Boolean;
 begin
-  Result := Length(Trim(Self)) = 0;
+  Result := Length(System.SysUtils.Trim(Self)) = 0;
 end;
 
 { TCaptionHelper }
 
 function TCaptionHelper.IsEmpty: Boolean;
 begin
-  Result := Length(Trim(Self)) = 0;
+  Result := Length(System.SysUtils.Trim(Self)) = 0;
+end;
+
+function TCaptionHelper.Trim: string;
+begin
+  Result := System.SysUtils.Trim(Self);
 end;
 
 { TUnicodeStringHelper }

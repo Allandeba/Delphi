@@ -42,7 +42,6 @@ contains
   uDictionaryUtils in 'Source\uDictionaryUtils.pas',
   uStrUtils in 'Source\uStrUtils.pas',
   uRequest in 'Source\uRequest.pas',
-  uJSONUtils in 'Source\uJSONUtils.pas',
   uStrHelper in 'Source\uStrHelper.pas',
   uObjectHelper in 'Source\uObjectHelper.pas';
 
