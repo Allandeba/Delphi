@@ -30,10 +30,13 @@ package Components;
 requires
   rtl,
   vcl,
-  vclimg;
+  vclimg,
+  Tee;
 
 contains
   uADPasswordButtonedEdit in 'Source\uADPasswordButtonedEdit.pas',
-  uADComboBox in 'Source\uADComboBox.pas';
+  uADComboBox in 'Source\uADComboBox.pas',
+  uADLabeledEdit in 'Source\uADLabeledEdit.pas',
+  uADCustomPanelNoCaption in 'Source\uADCustomPanelNoCaption.pas';
 
 end.
