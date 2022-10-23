@@ -109,7 +109,7 @@ end;
 
 procedure TFrameworkView.DefaultInitialization;
 begin
-  Position := poMainFormCenter;
+  Position := poOwnerFormCenter;
   FormStyle := fsNormal;
   PrepareComponents;
   PrepareEvents;
