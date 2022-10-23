@@ -31,7 +31,7 @@ unit DCPtwofish_LB3Modified;
 interface
 
 uses
-  Types, Classes, SysUtils{$IFDEF MSWINDOWS}, Windows{$ENDIF};
+  SysUtils{$IFDEF MSWINDOWS}, Windows{$ENDIF};
 
 const
   INPUTWHITEN= 0;

@@ -11,7 +11,6 @@ const
   CHAINMODEID = 'native.CBC';
 
   IMG_FOLDER = SOURCE_FOLDER + 'img\';
-  IMG_SETTINGS = 'settings.png';
   IMG_ERROR = 'error.png';
   IMG_SUCCESS = 'success.png';
   IMG_WARNING = 'warning.png';

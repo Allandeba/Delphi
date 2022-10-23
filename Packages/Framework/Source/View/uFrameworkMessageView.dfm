@@ -6,8 +6,8 @@ inherited FrameworkMessageView: TFrameworkMessageView
   Font.Name = 'Tahoma'
   Scaled = False
   OnShow = FormShow
-  ExplicitWidth = 460
-  ExplicitHeight = 178
+  ExplicitWidth = 464
+  ExplicitHeight = 179
   TextHeight = 13
   object PanelBackground: TPanel
     Left = 0
@@ -18,8 +18,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
     Caption = 'PanelBackground'
     ShowCaption = False
     TabOrder = 0
-    ExplicitWidth = 444
-    ExplicitHeight = 139
     object PanelMessages: TPanel
       Left = 1
       Top = 1
@@ -30,8 +28,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
       Caption = 'PanelMessages'
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 442
-      ExplicitHeight = 137
       object PanelImage: TPanel
         Left = 0
         Top = 0
@@ -42,7 +38,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
         Caption = 'PanelImage'
         ShowCaption = False
         TabOrder = 0
-        ExplicitHeight = 137
         object ImageError: TImage
           Left = 9
           Top = 28
@@ -60,8 +55,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
         Caption = 'PanelButtons'
         ShowCaption = False
         TabOrder = 1
-        ExplicitWidth = 359
-        ExplicitHeight = 137
         object PanelMessageTitle: TPanel
           Left = 0
           Top = 0
@@ -72,7 +65,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
           Caption = 'PanelMessages'
           ShowCaption = False
           TabOrder = 0
-          ExplicitWidth = 359
           object LabelTitle: TLabel
             AlignWithMargins = True
             Left = 6
@@ -92,8 +84,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
           Caption = 'PanelButtons'
           ShowCaption = False
           TabOrder = 1
-          ExplicitTop = 108
-          ExplicitWidth = 359
         end
         object PanelMessageDetail: TPanel
           Left = 0
@@ -105,8 +95,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
           Caption = 'PanelMessages'
           ShowCaption = False
           TabOrder = 2
-          ExplicitTop = 31
-          ExplicitWidth = 359
           object MemoMessage: TMemo
             Left = 0
             Top = 0
@@ -114,7 +102,6 @@ inherited FrameworkMessageView: TFrameworkMessageView
             Height = 77
             Align = alClient
             TabOrder = 0
-            ExplicitWidth = 359
           end
         end
       end

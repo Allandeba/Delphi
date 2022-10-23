@@ -3,7 +3,7 @@ unit uFrameworkMessageView;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
   Vcl.ExtCtrls, uFrameworkEnums, Vcl.StdCtrls, uFrameworkView,
   uFrameworkMessage;
 
