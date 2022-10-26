@@ -66,8 +66,12 @@ __recovery/
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+
 .DS_Store
 Packages/.DS_Store
 Packages/Components/.DS_Store
 Packages/Components/Source/.DS_Store
+
 Packages/Framework/.DS_Store
+Packages/Framework/.*Win*
+Packages/Framework/UnitTest/.*Win*
