@@ -73,5 +73,5 @@ Packages/Components/.DS_Store
 Packages/Components/Source/.DS_Store
 
 Packages/Framework/.DS_Store
-Packages/Framework/.*Win*
-Packages/Framework/UnitTest/.*Win*
+Packages/Framework/*Win*
+Packages/Framework/UnitTest/*Win*
