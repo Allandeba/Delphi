@@ -71,7 +71,12 @@ modules/
 Packages/.DS_Store
 Packages/Components/.DS_Store
 Packages/Components/Source/.DS_Store
+Packages/Components/*Win*
+Packages/Components/UnitTest/*Win*
 
 Packages/Framework/.DS_Store
 Packages/Framework/*Win*
 Packages/Framework/UnitTest/*Win*
+
+Packages/SysUtils/.DS_Store
+Packages/SysUtils/*Win*
