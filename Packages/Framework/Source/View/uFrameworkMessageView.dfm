@@ -8,6 +8,7 @@ inherited FrameworkMessageView: TFrameworkMessageView
   OnShow = FormShow
   ExplicitWidth = 464
   ExplicitHeight = 179
+  PixelsPerInch = 96
   TextHeight = 13
   object PanelBackground: TPanel
     Left = 0

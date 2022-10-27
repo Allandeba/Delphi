@@ -1,5 +1,4 @@
 program FrameworkTest;
-
 {$IFNDEF TESTINSIGHT}
 {$APPTYPE CONSOLE}
 {$ENDIF}
@@ -13,10 +12,10 @@ uses
   DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
-  uCopyRequiredFilesTest in 'uCopyRequiredFilesTest.pas';//,
-//  uImageFolderTest in 'uImageFolderTest.pas',
-//  uMessageViewTest in 'uMessageViewTest.pas',
-//  uCriptographyTest in 'uCriptographyTest.pas';
+  uCopyRequiredFilesToExeFilePath in 'uCopyRequiredFilesToExeFilePath.pas',
+  uImageFolderTest in 'uImageFolderTest.pas',
+  uMessageViewTest in 'uMessageViewTest.pas',
+  uCriptographyTest in 'uCriptographyTest.pas';
 
 {$IFNDEF TESTINSIGHT}
 var
@@ -26,6 +25,7 @@ var
   nunitLogger : ITestLogger;
 {$ENDIF}
 begin
+  TCopyRequiredFilesToExeFilePath.Execute;
 {$IFDEF TESTINSIGHT}
   TestInsight.DUnitX.RunRegisteredTests;
 {$ELSE}
@@ -38,7 +38,6 @@ begin
     runner.UseRTTI := True;
     //When true, Assertions must be made during tests;
     runner.FailsOnNoAsserts := False;
-
     //tell the runner how we will log things
     //Log to the console window if desired
     if TDUnitX.Options.ConsoleMode <> TDunitXConsoleMode.Off then
@@ -49,12 +48,10 @@ begin
     //Generate an NUnit compatible XML File
     nunitLogger := TDUnitXXMLNUnitFileLogger.Create(TDUnitX.Options.XMLOutputFile);
     runner.AddLogger(nunitLogger);
-
     //Run tests
     results := runner.Execute;
     if not results.AllPassed then
       System.ExitCode := EXIT_ERRORS;
-
     {$IFNDEF CI}
     //We don't want this happening when running under CI.
     if TDUnitX.Options.ExitBehavior = TDUnitXExitBehavior.Pause then

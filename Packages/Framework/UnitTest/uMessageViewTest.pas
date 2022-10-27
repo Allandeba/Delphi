@@ -22,7 +22,7 @@ type
 implementation
 
 uses
-  Winapi.Windows, System.SysUtils, Vcl.Controls;
+  Winapi.Windows, System.SysUtils, Vcl.Controls, pngimage;
 
 procedure TMessageViewTest.MessageArgsTest;
 var
@@ -55,7 +55,7 @@ begin
   AModalResult := TMessageView.New('MessageShowAndResultTest - Select NO').Buttons([baYesNo]).ShowResult;
   Assert.AreEqual(Ord(AModalResult), Ord(mrNo), 'Not pressed "NO" button');
 
-  AQtdButtonTested := 1; // Quantity of runned tests less 1.
+  AQtdButtonTested := 1; // Quantity of runned tests - 1.
   Assert.AreEqual(AQtdButtonTested, AQtdButtonAction);
 end;
 
@@ -98,7 +98,7 @@ begin
   TMessageView.New('MessageIconTypeTest - Error').Error.Show;
   TMessageView.New('MessageIconTypeTest - Dev').Dev.Show;
 
-  AQtdMessageIconTypeTested := 3; // Quantity of runned tests less 1.
+  AQtdMessageIconTypeTested := 3; // Quantity of runned tests - 1.
   Assert.AreEqual(AQtdMessageIconTypeTested, AQtdMessageIconType);
 end;
 
